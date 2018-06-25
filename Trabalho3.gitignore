@@ -1,0 +1,64 @@
+// ***Sâmyla Alves Pereira***
+// Trabalho extra Nº3 de SO
+
+#include <stdio.h>
+#include <string.h>
+#include <locale.h>
+
+int main(void)
+{
+	setlocale(LC_ALL, "Portuguese");
+	FILE *antigo, *novo;
+	char *nome;
+	int ch;
+	char destino[100], primeiro[100];
+	const char x = '\\';
+
+	//lendo o arquivo e verificando sua existencia
+	gets(primeiro);
+	fflush (stdin);
+	antigo = fopen(primeiro, "r");
+	if(antigo == NULL)
+	{
+		printf("\nErro, arquivo inexinte!");
+		return 1;
+	}
+	else
+	{
+		printf("\nArquivo encontrado!\n\n");
+	}
+
+	//atribuindo nome ao arquivo, lendo destino e criando um novo
+	nome = strrchr(primeiro, x);
+	gets(destino);
+	novo = fopen(strcat(destino, nome), "a");
+	if (novo == NULL)
+	{
+		printf("\nUm arquivo com o mesmo nome já existe nesse local!");
+		return 0;
+	}
+	else
+	{
+		while ((ch = getc (antigo)) != EOF)
+			putc (ch, novo);
+	}
+
+	printf("\n+-------------------------------------------------------------------------+\n");
+	printf("¦  Copiando Arquivo\n");
+	printf("¦\n");
+	printf("+--[DE]-------------------------------------------------------------------+\n");
+	printf("¦\n");
+	printf("¦  Nome: %s\n", &(nome[1]));
+	printf("¦  Local: %s\n", primeiro);
+	printf("¦\n");
+	printf("+--[PARA]-----------------------------------------------------------------+\n");
+	printf("¦\n");
+	printf("¦  Nome: %s\n", &(nome[1]));
+	printf("¦  Local: %s\n", destino);
+	printf("¦\n");
+	printf("+-------------------------------------------------------------------------+");
+
+	fclose(antigo);
+	fclose(novo);
+	return(0);
+}
